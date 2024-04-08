@@ -2,7 +2,7 @@ import mongoose,{Schema} from 'mongoose';
 import jwt from "jsonwebtoken"  // this is used for authentication purpose, it is the bearer token it mean jisake pass ye hoga use hum data send kar denge it is like a key
 import bcrypt from "bcrypt" // this will change the password into the hashcode then it stored into the database
 
- const  userSchema =new schema({
+ const  userSchema =new Schema({
     userName: {
         type: String,
         required : true,
@@ -47,7 +47,7 @@ password:{
     required: [true,'Password is Required']
 },
 refreshToken:{
- type: true
+ type: String
 }
 
 },
@@ -64,7 +64,7 @@ refreshToken:{
 
 userSchema.pre("save", async function(next){
     if(!this.isModified("password")) return next()
-    this.password = bcrypt.hash(this.password,10)
+    this.password = await bcrypt.hash(this.password,10)
     next()
 })
 userSchema.methods.isPasswordCorrect = async function(password){
@@ -94,6 +94,6 @@ userSchema.methods.generateRefreshToken = function(){
     }
     )
 }
+ 
 
-
-export const user = mongoose.model("User", userSchema)
+export const User = mongoose.model("User", userSchema)

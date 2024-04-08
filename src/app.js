@@ -14,5 +14,15 @@ import cookieParser from "cookie-parser"
  
 
 
+ //routes
+
+ import userRouter from './routes/user.routes.js'
+
+
+
+ //routes declaration
+app.use("/api/v1/users", userRouter) //this will throw user at the register user page
+
+//http://localhost:8000/users/login/register
 
  export {app}
